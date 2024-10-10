@@ -90,8 +90,8 @@ if (window.localStorage) {
             console.log(response.data);
             if (response.data) {
                 loggedIn.style.display = 'inline-block';
-                document.getElementById('userName').innerText = `Hi! ${response.data.name}`;
-                document.getElementById('userName').href = response.data.html_url;
+                document.getElementById('username').innerText = `Hi! ${response.data.name}`;
+                document.getElementById('username').href = response.data.html_url;
                 localStorage.setItem('accessToken', response.data.accessToken);
                 accessToken = response.data.accessToken;
                 getData();

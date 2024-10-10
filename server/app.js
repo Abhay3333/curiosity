@@ -1,26 +1,39 @@
+// app.js
 require('./../config/config');
-
 const express = require('express');
 const session = require('express-session');
-const { mongoose } = require('./db/mongoose');
-const { usernameRoutes } = require('./routes/api/username');
-const { userRoutes } = require('./routes/user');
-const { passport } = require('./auth');
+require('./db/mongoose');
+const usernameRoutes  = require('./routes/api/username');
+const userRoutes  = require('./routes/user');
+const  passport  = require('./auth');
+const cors = require('cors');
+require('dotenv').config();
+
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-// Initialize Passport!  Also use passport.session() middleware, to support
-// persistent login sessions (recommended).
+// Session middleware
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
+
+// Initialize Passport and use session
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Cors middleware
+app.use(cors());
+
+// Body parser middleware
+app.use(express.json());
+
+// Static files
 app.use(express.static(`${__dirname}/../public`));
 
+// Routes
 app.use('/user', userRoutes);
 app.use('/api/username', usernameRoutes);
 
+// Start server
 app.listen(port, () => {
     console.log(`Starting server on port ${port}.`);
 });

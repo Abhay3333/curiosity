@@ -47,4 +47,4 @@ router.get('/all', (req, res) => {
     res.send(USERNAMES);
 });
 
-module.exports.usernameRoutes = router;
+module.exports = router;
